@@ -16,7 +16,7 @@ export default function Home({result}) {
   )
 }
 export async function getServerSideProps() {
-  const result= await fetch(`https://newsapi.org/v2/top-headlines?q=india&apiKey=${process.env.API_KEY}`).then((res)=>res.json())
+  const result= await fetch(`https://newsapi.org/v2/top-headlines?q=india&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`).then((res)=>res.json())
   return {
     props:{
       result

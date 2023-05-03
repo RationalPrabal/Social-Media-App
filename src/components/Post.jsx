@@ -33,7 +33,9 @@ const {data:session}= useSession()
 const deletePost =async()=>{
     if(window.confirm("Are you sure you want to delete?")){
 deleteDoc(doc(db,"posts",post.id))
+if(post.data().image){
 deleteObject(ref(storage,`posts/${post.id}/image`))
+}
     }
 }
 //! setting the likes count

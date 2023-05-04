@@ -6,10 +6,13 @@ import React from 'react'
 import Moment from 'react-moment'
 import { db, storage } from '../../firebase'
 import { deleteObject, ref } from 'firebase/storage'
+import { useRecoilState } from 'recoil'
+import { modalState } from '../../atom/ModalAtom'
 
 export default function Post({post}) {
     const [likes,setLikes]= React.useState([])
     const [hasLiked,setHasLiked]= React.useState(false)
+    const [open,setOpen]= useRecoilState(modalState)
 const {data:session}= useSession()
 
 //! like post function
@@ -68,7 +71,7 @@ setHasLiked(likes.findIndex(like=>like.id===session.user.uid)!==-1) //! if uid i
                 <p className='text-gray-800 text-[15px] sm:text-[16px] mb-2'>{post.data().text}</p>
                 <img className='rounded-2xl mr-2' src={post.data().image}/>
                 <div className='flex justify-between text-gray-500 p-2'>
-                    <ChatIcon className='h-9 hoverEffect w-9 p-2 hover:text-sky-500 hover:bg-sky-100'/>
+                    <ChatIcon onClick={()=>setOpen(!open)} className='h-9 hoverEffect w-9 p-2 hover:text-sky-500 hover:bg-sky-100'/>
                    {
                     session?.user.uid===post?.data().id &&  <TrashIcon onClick={deletePost} className='h-9 hoverEffect w-9 p-2 hover:text-red-600 hover:bg-red-100'/>
                    }
